@@ -17,7 +17,7 @@ def process_image(img_path):
 if __name__ == '__main__':
 
 	# path to test image
-	test_img_path = "G:\\git-repos\\mobile-net-projects\\dataset\\test\\test_image_1.jpg"
+	test_img_path = "C:\\Users\\VuBaSang\\Documents\\M-NOD-21\\2-course\\2-semester\\Machine-learning\\tensorflowJS\\dataset\\test\\test_image_1.jpg"
 
 	# process the test image
 	pImg = process_image(test_img_path)
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 	# make predictions on test image using mobilenet
 	prediction = mobilenet.predict(pImg)
 
-	# obtain the top-5 predictions
+	# obtain the top-10 predictions
 	results = imagenet_utils.decode_predictions(prediction)
 	print(results)
 
