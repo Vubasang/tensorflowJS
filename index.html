@@ -4,9 +4,17 @@
 	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 	<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
 	<script type="text/javascript" src="js/mobile-net.js"></script>
-	<script type="text/javascript" src="js/imagenet_classes.js"></script> 
+	<script type="text/javascript" src="js/chart.js"></script>
+	<script type="text/javascript" src="js/imagenet_classes.js"></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+
+
 </head>
 <body>
 	<div class="container">
@@ -42,12 +50,16 @@
 				<div class="out-box" id="predict-box" style="display: none; margin-top: 25px; margin-bottom: 25px; font-size: 24px;">
 					<p id="prediction"></p>
 					<br>
-					<p><b style="color: #2a067e !important; font-style: italic; font-weight: 100; font-size: 24px;">Top-5 Predictions</b></p>
+					<p><b style="color: #2a067e !important; font-style: italic; font-weight: 100; font-size: 24px;">Top-10 Predictions</b></p>
 					<ul id="predict-list">
 					</ul>
 				</div>
 			</div>
 		</div>
+		<div id="container" style="height: 700px; max-width: 1500px; position: relative; left: 13%; margin-top: 50px; bottom: 50px;"></div>
+		<div>
+			<canvas id="sang" style="max-height: 700px; max-width: 1500px; position: relative; left: 13%; margin-top: 50px; bottom: 50px;"></canvas>
+		</div> 
 	</div>
 </body>
 </html>

@@ -64,19 +64,144 @@ async function predictImage(){
 			};
 		}).sort(function (a, b) {
 			return b.probability - a.probability;
-		}).slice(0, 5);
+		}).slice(0, 10);
 
 	document.getElementById("predict-box").style.display = "block";
 	document.getElementById("prediction").innerHTML = "MobileNet prediction:<br><br><b>" + results[0].className + "</b>";
 
 	var ul = document.getElementById("predict-list");
 	ul.innerHTML = "";
+
 	results.forEach(function (p) {
 		console.log(p.className + " " + p.probability.toFixed(5));
 		var li = document.createElement("LI");
-		li.innerHTML = p.className + " " + p.probability.toFixed(5);
+		li.innerHTML = p.className + ": " + p.probability.toFixed(5);
 		ul.appendChild(li);
 	})
+
+	var arrayClassName = [];
+	for(var i=0; i < results.length; i++){
+		arrayClassName.push(results[i].className);
+	}
+
+	var arrayProbability = [];
+	for(var i=0; i < results.length; i++){
+		arrayProbability.push(results[i].probability.toFixed(5));
+	}
+
+	/*function square_data(chart){
+		var c = document.createElement("canvas");
+		var ctx = c.getContext("2d");
+		ctx.fillStyle = "#3300CC";
+		ctx.font = "20px Georgia";
+		ctx.fillText(chart.dataset.data[chart.dataIndex], 150, 60);
+		ctx.stroke();
+		return c
+	}*/
+
+	var xValues = arrayClassName;
+	var yValues = arrayProbability;
+	
+	new Chart("sang", {
+		type: "line",
+		data: {
+		  labels: xValues,
+		  datasets: [{
+			fill: false,
+			lineTension: 0,
+			backgroundColor: "rgba(8, 100, 140, 1)",
+			borderColor: "rgba(8, 100, 140, 0.5)",
+			data: yValues
+		  }]
+		},
+		options: {
+			/*elements:{
+				"point":{"pointStyle":square_data},
+			},*/
+		  	legend: {display: false},
+        	title: {
+                display: true,
+                text: 'Probability Analytics Chart',
+				fontSize: 30,
+				fontColor: "blue"
+            },
+			plotOptions: {
+				line: {
+					dataLabels: {
+						enabled: true
+					},
+					enableMouseTracking: false
+				}
+			},
+		  scales: {
+			yAxes: [{ticks: {min: 0, max:1, fontSize: 20}}],
+			xAxes: [{ticks: {fontSize: 20}}],
+		  }
+		}
+	  });
+
+	  Highcharts.chart('container', {
+		credits: {
+            enabled: false
+        },
+		title: {
+			display: true,
+            text: 'Probability Analytics Chart',
+			style: {
+                color: 'blue',
+				fontSize: '30px',
+                fontWeight: 'bold'
+            }
+		},
+		xAxis: {
+			categories: arrayClassName,
+			labels: {
+                style: {
+                    color: 'black',
+                    fontSize:'18px'
+                }
+            },
+			title: {
+				text: 'Predictions',
+				style: {
+					color: 'black',
+					fontSize: '24px',
+				}
+			}
+		},
+		yAxis: {
+			labels: {
+                style: {
+                    color: 'black',
+                    fontSize:'18px'
+                }
+            },
+			title: {
+				text: 'Probability',
+				style: {
+					color: 'black',
+					fontSize: '24px',
+				}
+			}
+		},
+		plotOptions: {
+			series: {
+				dataLabels: {
+					enabled: true,
+					borderRadius: 5,
+					backgroundColor: 'rgba(252, 255, 197, 0.7)',
+					borderWidth: 0,
+					borderColor: '#AAA',
+					y: -6
+				}
+			}
+		},
+		series: [{
+			showInLegend: false,
+		  /*name: 'Predictions',*/
+			data: arrayProbability.map(Number),
+		}]
+	});
 
 	if (typeof predictions !== "undefined"){
 		document.getElementById("progress-box").style.display = "none";
